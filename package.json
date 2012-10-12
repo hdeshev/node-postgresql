@@ -1,0 +1,9 @@
+{
+  "name": "node-postgresql",
+  "description": "Node.js calling PostgreSQL sample app",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "pg": "*"
+  }
+}
