@@ -3,6 +3,21 @@ var pg = require('pg').native;
 
 var dbUrl = "tcp://nodetest:1234@localhost/nodetest";
 
+function disconnectAll() {
+    pg.end();
+}
+
+function testDate(onDone) {
+    pg.connect(dbUrl, function(err, client) {
+        client.query("SELECT NOW() as when", function(err, result) {
+            console.log("Row count: %d",result.rows.length);  // 1
+            console.log("Current year: %d", result.rows[0].when.getFullYear());
+
+            onDone();
+        });
+    });
+}
+
 function testTable(onDone) {
     pg.connect(dbUrl, function(err, client) {
         client.query("CREATE TEMP TABLE reviews(id SERIAL, author VARCHAR(50), content TEXT)");
@@ -23,25 +38,6 @@ function testTable(onDone) {
         });
     });
 }
-
-function testDate(onDone) {
-    pg.connect(dbUrl, function(err, client) {
-        client.query("SELECT NOW() as when", function(err, result) {
-            console.log("Row count: %d",result.rows.length);  // 1
-            console.log("Current year: %d", result.rows[0].when.getFullYear());
-
-            onDone();
-        });
-    });
-}
-
-function disconnectAll() {
-    pg.end();
-}
-
-testTable((function() {
-    testDate(disconnectAll)
-}));
 
 testDate((function() {
     testTable(disconnectAll)
