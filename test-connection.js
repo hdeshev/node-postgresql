@@ -24,7 +24,7 @@ function testTable(onDone) {
         client.query("INSERT INTO reviews(author, content) VALUES($1, $2)",
             ["mad_reviewer", "I'd buy this any day of the week!!11"]);
         client.query("INSERT INTO reviews(author, content) VALUES($1, $2)",
-            ["calm_reviewer", "Yes, that was pretty a good product."]);
+            ["calm_reviewer", "Yes, that was a pretty good product."]);
         client.query("SELECT * FROM reviews", function(err, result) {
             console.log("Row count: %d",result.rows.length);  // 1
             for (var i = 0; i < result.rows.length; i++) {
